@@ -1,0 +1,106 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="mapper.ActivityMapper">
+    
+    <resultMap id="ActivityResult" type="com.edu.ccnu.app.demo.pojo.Activity">
+        <result property="activityId" column="Activity_id"></result>
+        <result property="activityName" column="Activity_name"></result>
+        <result property="activityLocation" column="Activity_location"></result>
+        <result property="activityStartTime" column="Activity_startTime"></result>
+        <result property="activityState" column="Activity_state"></result>
+        <result property="activityMaxSize" column="Activity_maxSize"></result>
+        <result property="activityRegisterDuration" column="Activity_registerDuration"></result>
+        <result property="activityEnrollTime" column="Activity_enrollTime"></result>
+        <result property="activityRegisterTime" column="Activity_registerTime"></result>
+        <result property="activityRegisterMode" column="Activity_registerMode"></result>
+        <result property="activityContent" column="Activity_content"></result>
+        <result property="activityType" column="Activity_type"></result>
+        <result property="activityDuration" column="Activity_duration"></result>
+        <result property="activitySponsorId" column="Activity_sponsorId"></result>
+    </resultMap>
+
+    <select id="getActivityByPage" resultMap="ActivityResult">
+        select * from activity
+    </select>
+
+    <select id="getAllActivity" resultMap="ActivityResult">
+        select * from activity
+    </select>
+
+    <select id="getActivityById" parameterType="String">
+        select * from activity
+        <where>
+            Activity_id = #{activityId}
+        </where>
+    </select>
+
+    <insert id="insertActivity" parameterType="com.edu.ccnu.app.demo.pojo.Activity" useGeneratedKeys="true" keyProperty="activityId">
+        insert into activity
+        (
+        Activity_id,
+        <if test = "activityName != null and activityName !=''">Activity_name,</if>
+        <if test = "activityLocation != null and activityLocation !=''">Activity_location,</if>
+        <if test = "activityStartTime != null and activityStartTime !=''">Activity_startTime,</if>
+        <if test = "activityState != null and activityState !=''">Activity_state,</if>
+        <if test = "activityMaxSize != null and activityMaxSize !=''">Activity_maxSize,</if>
+        <if test = "activityRegisterDuration != null and activityRegisterDuration !=''">Activity_registerDuration,</if>
+        <if test = "activityEnrollTime != null and activityEnrollTime !=''">Activity_enrollTime,</if>
+        <if test = "activityRegisterTime != null and activityRegisterTime !=''">Activity_registerTime,</if>
+        <if test = "activityRegisterMode != null and activityRegisterMode !=''">Activity_registerMode,</if>
+        <if test = "activityContent != null and activityContent !=''">Activity_content,</if>
+        <if test = "activityType != null and activityType !=''">Activity_type,</if>
+        <if test = "activityDuration != null and activityName !=''">Activity_duration,</if>
+        <if test = "activitySponsorId != null and activitySponsorId != ''">Activity_sponsorId</if>
+        )
+        values
+        (
+        #{activityId},
+        <if test = "activityName != null and activityName !=''">#{activityName},</if>
+        <if test = "activityLocation != null and activityLocation !=''">#{activityLocation},</if>
+        <if test = "activityStartTime != null and activityStartTime !=''">#{activityStartTime},</if>
+        <if test = "activityState != null and activityState !=''">#{activityState},</if>
+        <if test = "activityMaxSize != null and activityMaxSize !=''">#{activityMaxSize},</if>
+        <if test = "activityRegisterDuration != null and activityRegisterDuration !=''">#{activityRegisterDuration},</if>
+        <if test = "activityEnrollTime != null and activityEnrollTime !=''">#{activityEnrollTime},</if>
+        <if test = "activityRegisterTime != null and activityRegisterTime !=''">#{activityRegisterTime},</if>
+        <if test = "activityRegisterMode != null and activityRegisterMode !=''">#{activityRegisterMode},</if>
+        <if test = "activityContent != null and activityContent !=''">#{activityContent},</if>
+        <if test = "activityType != null and activityType !=''">#{activityType},</if>
+        <if test = "activityDuration != null and activityName !=''">#{activityDuration},</if>
+        <if test = "activitySponsorId != null and activitySponsorId !=''">#{activitySponsorId}</if>
+        )
+    </insert>
+
+    <update id="updateActivity" parameterType="String">
+        update user
+        <set>
+            <if test = "activityName != null and activityName !=''">Activity_name = #{activityName},</if>
+            <if test = "activityLocation != null and activityLocation !=''">Activity_location = #{activityLocation},</if>
+            <if test = "activityStartTime != null and activityStartTime !=''">Activity_startTime = #{activityStartTime},</if>
+            <if test = "activityState != null and activityState !=''">Activity_state = #{activityState},</if>
+            <if test = "activityMaxSize != null and activityMaxSize !=''">Activity_maxSize = #{activityMaxSize},</if>
+            <if test = "activityRegisterDuration != null and activityRegisterDuration !=''">Activity_registerDuration = #{activityRegisterDuration},</if>
+            <if test = "activityEnrollTime != null and activityEnrollTime !=''">Activity_enrollTime = #{activityEnrollTime},</if>
+            <if test = "activityRegisterTime != null and activityRegisterTime !=''">Activity_registerTime = #{activityRegisterTime},</if>
+            <if test = "activityRegisterMode != null and activityRegisterMode !=''">Activity_registerMode = #{activityRegisterMode},</if>
+            <if test = "activityContent != null and activityContent !=''">Activity_content = #{activityContent},</if>
+            <if test = "activityType != null and activityType !=''">Activity_type = #{activityType},</if>
+            <if test = "activityDuration != null and activityName !=''">Activity_duration = #{activityDuration},</if>
+            <if test = "activitySponsorId != null and activitySponsorId !=''">Activity_sponsorId = #{activittSponsorId}</if>
+        </set>
+        where Activity_id = #{activityId}
+    </update>
+
+    <delete id="deleteActivityById" parameterType="String">
+        delete from user
+        where Activity_id = #{activityId}
+    </delete>
+
+    <delete id="deleteActivityByIds" parameterType="String">
+        delete from activity where Activity_id in
+        <foreach collection="array" item="activityId" open="(" separator="," close=")">
+            #{activityId}
+        </foreach>
+    </delete>
+
+</mapper>

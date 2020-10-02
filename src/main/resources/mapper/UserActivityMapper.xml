@@ -1,0 +1,67 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="mapper.UserActivityMapper">
+
+    <resultMap id="UserActivityResult" type="com.edu.ccnu.app.demo.pojo.UserActivity">
+        <result property="userId" column="User_id"></result>
+        <result property="activityId" column="Activity_id"></result>
+        <result property="userActivityTime" column="UserActivity_time"></result>
+        <result property="userActivityId" column="UserActivity_id"></result>
+        <result property="userActivityIsRegistered" column="UserActivity_isRegistered"></result>
+    </resultMap>
+
+    <select id="getUserActivityByUserIdAndActivityId" parameterType="String" resultMap="UserActivityResult">
+        select * from useractivity
+        <where>
+            User_id = #{userId} and Activity_id = #{activityId}
+        </where>
+    </select>
+
+    <select id="getUserActivityByUserId" resultMap="UserActivityResult">
+        select * from useractivity
+        <where>
+            User_id = #{userId}
+        </where>
+    </select>
+
+    <select id="getUserCountByActivityId" parameterType="String" resultMap="UserActivityResult">
+        select * from useractivity
+        <where>
+            Activity_id = #{activityId}
+        </where>
+    </select>
+
+    <insert id="insertUserActivity" parameterType="com.edu.ccnu.app.demo.pojo.UserActivity" useGeneratedKeys="true" keyProperty="userActivityId">
+        insert into useractivity
+        (
+        Activity_id,
+        User_id,
+        <if test = "userActivityTime != null and userActivityTime !=''">UserActivity_time,</if>
+        <if test = "userActivityIsRegistered != null and userActivityIsRegistered !=''">UserActivity_isRegistered</if>
+        )
+        values
+        (
+        #{activityId},
+        #{userId},
+        <if test = "userActivityTime != null and userActivityTime !=''">#{userActivityTime},</if>
+        <if test = "userActivityIsRegistered != null and userActivityIsRegistered !=''">#{userActivityIsRegistered}</if>
+        )
+    </insert>
+
+    <delete id="deleteUserActivityByUserId" parameterType="String">
+        delete from useractivity
+        where User_id = =#{userId}
+    </delete>
+
+    <delete id="deleteUserActivityByActivityId" parameterType="String">
+        delete from useractivity
+        where Activity_id = #{activityId}
+    </delete>
+
+    <update id="updateUserActivityRegister" parameterType="String">
+        update useractivity
+        set UserActivity_isRegistered = 1
+        where
+        Activity_id = #{activityId} and User_id = #{userId}
+    </update>
+</mapper>

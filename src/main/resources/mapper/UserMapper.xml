@@ -1,0 +1,70 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="mapper.UserMapper">
+
+    <resultMap type="com.edu.ccnu.app.demo.pojo.User" id="UserResult">
+        <result property="userId" column="User_id"></result>
+        <result property="userName" column="User_name"></result>
+        <result property="userRealName" column="User_realName"></result>
+        <result property="userPhone" column="User_phone"></result>
+        <result property="userPassword" column="User_password"></result>
+        <result property="userIsAdmin" column="User_isAdmin"></result>
+    </resultMap>
+
+    <select id="getUserByPage" resultMap="UserResult">
+        SELECT * FROM user
+    </select>
+
+    <select id="getUserById" parameterType="String" resultMap="UserResult">
+        select * from user
+        <where>
+            User_id = #{userId}
+        </where>
+    </select>
+    
+    <insert id="insertUser" parameterType="com.edu.ccnu.app.demo.pojo.User" useGeneratedKeys="true" keyProperty="userId">
+        insert into user
+        (
+        User_id,
+        <if test = "userName != null and userName !=''">User_name,</if>
+        <if test = "userRealName != null and userRealName !=''">User_realName,</if>
+        <if test = "userPhone != null and userPhone !=''">User_phone,</if>
+        <if test = "userPassword != null and userPassword !=''">User_password,</if>
+        <if test = "userIsAdmin != null and userIsAdmin !=''">User_isAdmin</if>
+        )
+        values
+        (
+        #{userId},
+        <if test = "userName != null and userName !=''">#{userName},</if>
+        <if test = "userRealName != null and userRealName !=''">#{userRealName},</if>
+        <if test = "userPhone != null and userPhone !=''">#{userPhone},</if>
+        <if test = "userPassword != null and userPassword !=''">#{userPassword},</if>
+        <if test = "userIsAdmin != null and userIsAdmin !=''">#{userIdAdmin}</if>
+        )
+    </insert>
+
+    <update id="updateUser" parameterType="String">
+        update user
+        <set>
+            <if test = "userName != null and userName !=''">User_name = #{userName},</if>
+            <if test = "userRealName != null and userRealName !=''">User_realName = #{userRealname},</if>
+            <if test = "userPhone != null and userPhone !=''">User_phone = #{userPhone},</if>
+            <if test = "userPassword != null and userPassword !=''">User_password = #{userPassword},</if>
+            <if test = "userIsAdmin != null and userIsAdmin !=''">User_isAdmin = #{userIsAdmin}</if>
+        </set>
+        where User_id = #{userId}
+    </update>
+    
+    <delete id="deleteUserByIds" parameterType="String">
+        delete from user where User_id in
+        <foreach collection="array" item="userId" open="(" separator="," close=")">
+            #{userId}
+        </foreach>
+    </delete>
+    
+    <delete id="deleteUserById" parameterType="String">
+        delete from user
+        where User_id = #{userId}
+    </delete>
+
+</mapper>

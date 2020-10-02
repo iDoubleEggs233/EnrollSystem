@@ -1,0 +1,2 @@
+# EnrollSystem
+一个活动报名系统，做到了用户和活动信息的管理，运用了Springboot+Mybatis实现业务开发，并且使用了Redis进行了缓存，并且设置了定时器定期更新活动状态。
